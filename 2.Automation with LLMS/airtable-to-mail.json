@@ -1,0 +1,118 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "authentication": "airtableTokenApi",
+        "baseId": {
+          "__rl": true,
+          "value": "https://airtable.com/appagvmHTGA3TfVdh/tbl1l8z4AwyuS6o5q/viwg58eNG5KHOIaXi?blocks=hide",
+          "mode": "url"
+        },
+        "tableId": {
+          "__rl": true,
+          "value": "https://airtable.com/appagvmHTGA3TfVdh/tbl1l8z4AwyuS6o5q/viwg58eNG5KHOIaXi?blocks=hide",
+          "mode": "url"
+        },
+        "triggerField": "Order Number",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtableTrigger",
+      "typeVersion": 1,
+      "position": [
+        -220,
+        -120
+      ],
+      "id": "6e6d33d3-e814-4fa3-bb7f-3e67dcfd7237",
+      "name": "Airtable Trigger"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "GPT-4O"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are responsible for customer orders. Your task is to collect incoming information about new orders and create a clear summary that will be sent via email to the team. The email should be signed with \"Customer Success Team\".\n\nHere are the details of the customer orders:\n\nOrder Number: {{ $json.fields['Order Number'] }}\nCustomer: {{ $json.fields.Customer }}\nProduct: {{ $json.fields.Product }}\nQuantity: {{ $json.fields.Quantity }}\nPrice: {{ $json.fields.Price }}\nDate: {{ $json.fields.Date }}\nStatus: {{ $json.fields.Status }}\n\nPlease provide the following output parameters:\n\nemail_subject\nemail_body\n\nmake a clean body with new lines if needed"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        0,
+        -120
+      ],
+      "id": "221c0701-81d5-4dd1-a336-bf72a8cd0adc",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "1OSpGxG92S3kbcgl",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "arnoldoberleiterhofer@gmail.com",
+        "subject": "={{ $json.message.content.email_subject }}",
+        "emailType": "text",
+        "message": "={{ $json.message.content.email_body }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        360,
+        -120
+      ],
+      "id": "5a616d56-9bbe-4c4d-9a84-6df30e41f39a",
+      "name": "Gmail",
+      "webhookId": "0cf99814-75bd-4932-bfc6-ee92e9ac87fa"
+    }
+  ],
+  "connections": {
+    "Airtable Trigger": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c92c913dd44ba94762e4b30bb2a8fe72a3a3bb65845b6f9018ed5bb6f55e75f3"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        -40
+      ],
+      "id": "5d1f72eb-9bc4-45de-877b-e23c5225b5c7",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "resource": "spreadsheet",
+        "title": "thi is a Test",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        120,
+        -40
+      ],
+      "id": "c1e15642-d202-4616-9f1a-7af4b790ce1b",
+      "name": "Google Sheets"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c92c913dd44ba94762e4b30bb2a8fe72a3a3bb65845b6f9018ed5bb6f55e75f3"
+  }
+}

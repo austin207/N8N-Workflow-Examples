@@ -1,0 +1,120 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -60,
+        20
+      ],
+      "id": "1c557941-d625-49db-9f21-bac2d346bd64",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appagvmHTGA3TfVdh",
+          "mode": "list",
+          "cachedResultName": "Test Airtable",
+          "cachedResultUrl": "https://airtable.com/appagvmHTGA3TfVdh"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblzfXRK5t1q5Rclp",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/appagvmHTGA3TfVdh/tblzfXRK5t1q5Rclp"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        140,
+        20
+      ],
+      "id": "51f3d3d2-3a9a-4303-984a-29a3addf1132",
+      "name": "Airtable"
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "Room",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        380,
+        20
+      ],
+      "id": "0e8659e1-184e-40a1-b775-c58c188eeda6",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        660,
+        20
+      ],
+      "id": "184dbe98-71d7-4ed9-834e-76f4328705b6",
+      "name": "Read/Write Files from Disk"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": "c92c913dd44ba94762e4b30bb2a8fe72a3a3bb65845b6f9018ed5bb6f55e75f3"
+  }
+}

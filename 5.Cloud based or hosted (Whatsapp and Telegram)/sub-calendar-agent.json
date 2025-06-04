@@ -1,0 +1,320 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "model": "gpt-4o",
+        "options": {}
+      },
+      "id": "d51217fa-97fb-4356-a2ed-80520ca3e7c1",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        -900,
+        620
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "1OSpGxG92S3kbcgl",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7ab380a2-a8d3-421c-ab4e-748ea8fb7904",
+              "name": "response",
+              "value": "Unable to perform task. Please try again.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5e7ec316-7175-439b-a5f3-5b8a8aa35880",
+      "name": "Try Again",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -380,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "39c2f302-03be-4464-a17a-d7cc481d6d44",
+              "name": "=response",
+              "value": "={{$json.output}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "34bc5962-6bea-469a-b1cf-2564f3edb918",
+      "name": "Success",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -380,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -1060,
+        400
+      ],
+      "id": "05805160-89a0-4d22-9bea-d5d04f472549",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "calendar": {
+          "__rl": true,
+          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Calendar', ``, 'string') }}",
+          "mode": "id",
+          "__regex": "(^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', `Die ID des Ereignisses.`, 'string') }}",
+        "updateFields": {
+          "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', `Der Endzeitpunkt des Ereignisses.`, 'string') }}",
+          "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', `Der Startzeitpunkt des Ereignisses.`, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        -260,
+        800
+      ],
+      "id": "b2870bd4-34f7-4b74-9eae-3b6d91dc4ba4",
+      "name": "updateEvent"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Calendar', ``, 'string') }}",
+          "mode": "id",
+          "__regex": "(^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', `Die ID des Ereignisses.`, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        -120,
+        780
+      ],
+      "id": "fd603f6b-e963-4c68-9697-ce3a4361ea67",
+      "name": "deleteEvent"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Calendar', ``, 'string') }}",
+          "mode": "id",
+          "__regex": "(^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)"
+        },
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', `Der Tag vor dem vom Nutzer gewünschten Datum.`, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', `Der Tag nach dem vom Nutzer gewünschten Datum.`, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        -580,
+        780
+      ],
+      "id": "7425593d-dc9b-4be4-85ed-891470a8b972",
+      "name": "getEvents"
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Calendar', ``, 'string') }}",
+          "mode": "id",
+          "__regex": "(^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', `Der Startzeitpunkt des Ereignisses.`, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', `Der Endzeitpunkt des Ereignisses.`, 'string') }}",
+        "additionalFields": {
+          "attendees": [],
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', `Der Titel des Ereignisses.`, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        -720,
+        780
+      ],
+      "id": "82ad5c06-38bb-4d12-af29-aa6e119dbaa8",
+      "name": "createEvent"
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Calendar', ``, 'string') }}",
+          "mode": "id",
+          "__regex": "(^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', `Der Startzeitpunkt des Ereignisses.`, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', `Der Endzeitpunkt des Ereignisses.`, 'string') }}",
+        "additionalFields": {
+          "attendees": [
+            "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Attendees', `Die Emailadresse des Teilnehmers.`, 'string') }}"
+          ],
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', `Der Titel des Ereignisses.`, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        -420,
+        780
+      ],
+      "id": "88037cea-cd7c-407e-9161-d0069672a659",
+      "name": "createEventWithAttendee"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.query }}",
+        "options": {
+          "systemMessage": "=# Role  \nYou are a calendar agent. Your tasks include creating, retrieving, and deleting events in the user's calendar.  \n\n# Tools  \n\n## getEvents  \nUse this tool to retrieve calendar schedules upon request.  \n\n## createEvent  \nUse this tool to create a solo appointment.  \n\n## updateEvent  \nUse this tool to update an event. You must first use **\"getEvents\"** to retrieve the ID of the event that needs to be updated.  \n\n## createEventWithAttendee  \nUse this tool to schedule an event with attendees.  \n\n## deleteEvent  \nUse this tool to delete an event. You must first use **\"getEvents\"** to retrieve the ID of the event that needs to be deleted.  \n\n  \ndate/time: **{{ $now }}**  \n"
+        }
+      },
+      "id": "a1ccf6b0-a4be-450c-8bad-8ef142b4a639",
+      "name": "Calender Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        -820,
+        400
+      ],
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Calender Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Calender Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "updateEvent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Calender Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "deleteEvent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Calender Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "getEvents": {
+      "ai_tool": [
+        [
+          {
+            "node": "Calender Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "createEvent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Calender Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "createEventWithAttendee": {
+      "ai_tool": [
+        [
+          {
+            "node": "Calender Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calender Agent": {
+      "main": [
+        [
+          {
+            "node": "Success",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Try Again",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c92c913dd44ba94762e4b30bb2a8fe72a3a3bb65845b6f9018ed5bb6f55e75f3"
+  }
+}
