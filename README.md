@@ -2,6 +2,11 @@
 
 This repository contains a collection of n8n workflows organized by different categories. These workflows demonstrate various automation scenarios and integrations using n8n.
 
+## Resources
+
+- [The Ultimate N8N Automation Guide](https://drive.google.com/file/d/14MfEDeeSfzhpT4LiiD_FW1Y_fQbO1dop/view?usp=drive_link) - Comprehensive guide to n8n automation
+- [My N8N Awakening: How I Accidentally Built an AI Co-Pilot for My Life](https://medium.com/@austinantony06/my-n8n-awakening-how-i-accidentally-built-an-ai-co-pilot-for-my-life-and-you-can-too-287336821de8) - Personal journey and insights into n8n automation
+
 ## Prerequisites
 
 - An n8n instance (self-hosted or cloud)
